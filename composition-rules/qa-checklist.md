@@ -35,6 +35,17 @@ Verify repeated structural elements stay consistent across the WHOLE artifact:
 
 This catches drift that point-checks on individual sections miss.
 
+## Comic-specific strict QA (in addition to the 8 points + cross-artifact check)
+
+When the artifact is a comic, strict QA additionally verifies:
+
+1. **Speaker identifiable** — every speech bubble has a `──` tail or connector that traces to a character glyph
+2. **Character bracket consistency** — the same named character uses the same bracket type (`(...)` round / `[...]` square / `{...}` curly / `<...>` angle) across every panel
+3. **At most one narration box per panel** — exception: A9.4 tech-explainer arc may have framing narration (top) + takeaway narration (bottom)
+4. **≤3 characters per panel** — per scope cut in the design spec
+5. **Face mood varies across panels** — when the same character appears in multiple panels, their face must change at least once (static-face comic = fail-twice triggers reroute to slideshow)
+6. **Panel frame widths identical** — every panel's outer frame is the same width (100 cols by default)
+
 ## When QA runs
 
 - **Light QA:** every single in-chat artifact.
@@ -76,6 +87,7 @@ When the simplify rule cannot save the layout, fall back to a simpler adjacent f
 | content-map | infographic |
 | flowchart | step-by-step-guide |
 | decision-tree | comparison-table |
+| comic | slideshow |
 
 When fallback fires, emit a one-line note:
 ```
