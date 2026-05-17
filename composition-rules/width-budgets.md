@@ -19,6 +19,7 @@ Every format has a defined max column width. Never exceed it.
 | decision-tree | 100 |
 | content-map | 100 |
 | concept-stack | 100 |
+| comic | 100 |
 | architecture-diagram | 110–120 |
 | sequence-diagram | 110–120 |
 | dashboard | 120 |
