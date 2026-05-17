@@ -91,6 +91,50 @@ Every multi-panel format has a canonical arc — a fixed sequence of panel purpo
 
 **Use for:** simple processes (lighter than playbook).
 
+### A9 — Comic arc family (multi-variant)
+
+The comic format ships with four named arc variants. The variant is chosen based on what the user is asking for; the format file's routing logic picks one. All four share the same panel/character/bubble grammar — they differ only in panel sequence and count.
+
+#### A9.1 — Teaching arc (3–5 panels, default 4)
+
+1. **Setup** — character in normal state, doing the thing they think is correct
+2. **Confusion / mistake** — character makes the common error; second character or narration reacts
+3. **Reveal / correction** — the rule lands via the other character or a narration box
+4. **Application** *(optional)* — character tries again, gets it right, *aha* face
+
+**Use for:** language-learning lessons, common-mistake patterns, any wrong-then-right teachable beat.
+
+#### A9.2 — Contrast arc (exactly 2 panels)
+
+1. **❌ Wrong way** — character demonstrates wrong approach; reaction face `(×_×)` or `(¬_¬)`
+2. **✓ Right way** — character demonstrates right approach; reaction face `(•◡•)` or `(^_^)`
+
+**Use for:** binary syntactic rules (ser vs estar, tú vs usted, `var` vs `let`). Maximum density.
+
+#### A9.3 — Joke arc (2–3 panels, default 3)
+
+1. **Setup** — character in mundane situation
+2. **Twist** — something unexpected happens / character realizes
+3. **Reaction** *(optional)* — beat panel, just a face, no dialogue
+
+**Use for:** one-liners where the *point* is the joke.
+
+#### A9.4 — Tech-explainer arc (4 panels, occasionally 3)
+
+1. **Narration sets the stage** — `┌── narración ──┐` at top + anthropomorphized concept character introduced (uses `<...>` bracket)
+2. **Approach** — concept attempts its job; encounters a gate / check / boundary
+3. **Complication** — gate rejects or creates friction (narration optional)
+4. **Resolution** — concept presents the right credential; gate opens. Optional final narration with takeaway rule.
+
+**Use for:** APIs, protocols, system mechanics, abstract concepts that get easier with an avatar.
+
+#### A9 — Comic-specific panel rules
+
+In addition to universal rules U1–U6 below:
+- **Face moods must change** when the same character appears in ≥2 panels (static-face comic = lifeless comic = strict QA failure → reroute to slideshow)
+- **Default panel count per variant** as listed above; never exceed 8 without explicit user request
+- **Compress before expanding** (U3 applies); drop optional panels (Application, Reaction) when the topic doesn't justify them
+
 ## Universal panel rules (apply to every arc)
 
 ### U1 — Every panel must earn its existence
