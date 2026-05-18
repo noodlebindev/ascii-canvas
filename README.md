@@ -310,6 +310,48 @@ Each slide is a self-contained panel with title + body + closing line. Pair
 this with the slideshow narrative arcs for explainers, onboarding decks, or
 content threads.
 
+### CV / résumé
+
+```
+╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                             ALEX RIVERA  ·  Senior Software Engineer                             ║
+║                    San Francisco  ·  alex@example.com  ·  github.com/arivera                     ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  ABOUT                                                                                           │
+│                                                                                                  │
+│  Ten years building backend systems for fintech and developer tools. Specialised in              │
+│  payment infrastructure, queues, and distributed databases. Currently leading platform           │
+│  at Acme Corp. Mentors at Bridge Fellowship on weekends.                                         │
+│                                                                                                  │
+└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────┬─────────────────────────────────────────────────┐
+│  EXPERIENCE                                    │  STACK                                          │
+│                                                │                                                 │
+│  Acme Corp     Staff Engineer    2023 — now    │  Languages     Go · TS · Python · Rust          │
+│  Stripe        Senior Engineer   2019 — 2023   │  Databases     Postgres · Redis · DynamoDB      │
+│  Shopify       Backend Engineer  2017 — 2019   │  Infra         AWS · Kubernetes · Terraform     │
+│  Pivotal       Software Engineer 2015 — 2017   │  Observability Datadog · OpenTelemetry          │
+│                                                │                                                 │
+└────────────────────────────────────────────────┴─────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  SELECT WORK                                                                                     │
+│                                                                                                  │
+│  •  Designed Stripe's idempotency layer  (2B+ requests/day at < 1 ms p99)                        │
+│  •  Led Shopify's queue migration from RabbitMQ to Kafka — 4× throughput, 1/3 cost               │
+│  •  Open source: dbmate (3.4k ★) · pg_consul (900 ★) · tdd-quickref (handbook)                   │
+│  •  Conference talks: GopherCon 2022, StaffPlus NYC 2024, KubeCon EU 2025                        │
+│                                                                                                  │
+└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+Header bar over stacked sections, with a two-column experience + stack
+split. Drops cleanly into a GitHub profile README, an email signature, or
+a plain-text portfolio.
+
 ### Comic (2 panels of 4)
 
 ```
