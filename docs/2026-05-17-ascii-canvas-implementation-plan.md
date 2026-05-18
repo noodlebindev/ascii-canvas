@@ -8,7 +8,7 @@
 
 **Tech Stack:** Markdown only. Git for version control. No build step, no test runner, no external CLI dependencies.
 
-**Spec reference:** `/Users/priyeshpatel/Skills/ascii-canvas/docs/2026-05-17-ascii-canvas-design.md`
+**Spec reference:** `docs/2026-05-17-ascii-canvas-design.md`
 
 **Verification model:** Batched end-to-end acceptance suite (7 prompts) at the end. No per-file test code — format files only matter when SKILL.md routes to them.
 
@@ -16,7 +16,7 @@
 
 ## Conventions used in this plan
 
-- All paths absolute under `/Users/priyeshpatel/Skills/ascii-canvas/`.
+- All paths absolute under ``.
 - Every task ends with a git commit. Use [conventional commits](https://www.conventionalcommits.org/) style: `feat:`, `chore:`, `docs:`.
 - Authoring steps include the full required content for foundational files (SKILL.md, composition-rules/). For the 16 format files and 16 example files, a shared template is defined once (Tasks 7 and 23) and each per-format task supplies the specific values that fill the template.
 - When a step says "verify the file contains X", re-read the file you just wrote and confirm. Do NOT skip this — it's the substitute for unit tests.
@@ -28,28 +28,28 @@
 ## Task 1: Initialize git repo + create folder structure
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/.gitignore`
+- Create: `.gitignore`
 - Create: directory tree
 
 - [ ] **Step 1: Create the directory tree**
 
 Run:
 ```bash
-mkdir -p /Users/priyeshpatel/Skills/ascii-canvas/{formats,composition-rules,examples,docs}
+mkdir -p {formats,composition-rules,examples,docs}
 ```
 
 - [ ] **Step 2: Initialize git repo**
 
 Run:
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && git init -b main
+cd ~/.claude/skills/ascii-canvas && git init -b main
 ```
 
-Expected output: `Initialized empty Git repository in /Users/priyeshpatel/Skills/ascii-canvas/.git/`
+Expected output: `Initialized empty Git repository in .git/`
 
 - [ ] **Step 3: Create .gitignore**
 
-Write `/Users/priyeshpatel/Skills/ascii-canvas/.gitignore`:
+Write `.gitignore`:
 
 ```
 .DS_Store
@@ -63,7 +63,7 @@ Write `/Users/priyeshpatel/Skills/ascii-canvas/.gitignore`:
 
 Run:
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add .gitignore docs/2026-05-17-ascii-canvas-design.md docs/2026-05-17-ascii-canvas-implementation-plan.md && \
   git commit -m "chore: initialize ascii-canvas skill repo with design spec and plan"
 ```
@@ -77,7 +77,7 @@ Expected: one commit on `main` containing 3 files.
 ## Task 2: Write composition-rules/box-drawing.md
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/composition-rules/box-drawing.md`
+- Create: `composition-rules/box-drawing.md`
 
 - [ ] **Step 1: Author the file**
 
@@ -176,7 +176,7 @@ Re-read the file. Confirm: R1-R6 are present, character inventory is complete fo
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add composition-rules/box-drawing.md && \
   git commit -m "feat: add box-drawing composition rules"
 ```
@@ -186,7 +186,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 ## Task 3: Write composition-rules/width-budgets.md
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/composition-rules/width-budgets.md`
+- Create: `composition-rules/width-budgets.md`
 
 - [ ] **Step 1: Author the file**
 
@@ -255,7 +255,7 @@ Re-read the file. Confirm: all 16 formats appear in the table, hard rules + over
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add composition-rules/width-budgets.md && \
   git commit -m "feat: add width-budget composition rules"
 ```
@@ -265,7 +265,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 ## Task 4: Write composition-rules/narrative-arcs.md
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/composition-rules/narrative-arcs.md`
+- Create: `composition-rules/narrative-arcs.md`
 
 - [ ] **Step 1: Author the file**
 
@@ -409,7 +409,7 @@ Re-read. Confirm: 8 arcs present (A1-A8), 6 universal rules (U1-U6), all match t
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add composition-rules/narrative-arcs.md && \
   git commit -m "feat: add narrative-arc composition rules"
 ```
@@ -419,7 +419,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 ## Task 5: Write composition-rules/qa-checklist.md
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/composition-rules/qa-checklist.md`
+- Create: `composition-rules/qa-checklist.md`
 
 - [ ] **Step 1: Author the file**
 
@@ -559,7 +559,7 @@ Re-read. Confirm: light + strict modes, 8-point checklist, cross-artifact consis
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add composition-rules/qa-checklist.md && \
   git commit -m "feat: add QA checklist composition rules"
 ```
@@ -571,7 +571,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 ## Task 6: Write SKILL.md
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/SKILL.md`
+- Create: `SKILL.md`
 
 - [ ] **Step 1: Author the file**
 
@@ -637,7 +637,7 @@ Compose high-quality ASCII/Unicode text-based visual artifacts. "Canva for ASCII
    - Do NOT combine formats in v1 unless explicitly requested
 
 3. LOAD FORMAT FILE (MANDATORY)
-   → Read /Users/priyeshpatel/Skills/ascii-canvas/formats/<format>.md
+   → Read formats/<format>.md
    No ad-hoc layouts. Templates only.
 
 4. DETERMINE CHARACTER SET
@@ -755,7 +755,7 @@ Re-read. Confirm:
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add SKILL.md && \
   git commit -m "feat: add SKILL.md entry point with triggers and routing"
 ```
@@ -833,7 +833,7 @@ For each of Tasks 8–22, you'll fill in the bracketed values per-format. The sk
 ## Task 8: formats/flowchart.md
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/formats/flowchart.md`
+- Create: `formats/flowchart.md`
 
 - [ ] **Step 1: Author the file using the Task 7 template with these values**
 
@@ -914,7 +914,7 @@ Re-read. Confirm: all template sections present, both Unicode and ASCII skeleton
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/flowchart.md && \
   git commit -m "feat: add flowchart format"
 ```
@@ -924,7 +924,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 ## Task 9: formats/slideshow.md
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/formats/slideshow.md`
+- Create: `formats/slideshow.md`
 
 - [ ] **Step 1: Author the file using the Task 7 template with these values**
 
@@ -977,7 +977,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/slideshow.md && \
   git commit -m "feat: add slideshow format"
 ```
@@ -987,7 +987,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 ## Task 10: formats/playbook.md
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/formats/playbook.md`
+- Create: `formats/playbook.md`
 
 - [ ] **Step 1: Author the file using the Task 7 template with these values**
 
@@ -1049,7 +1049,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/playbook.md && \
   git commit -m "feat: add playbook format"
 ```
@@ -1058,7 +1058,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 11: formats/cheat-sheet.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/cheat-sheet.md`
+**Files:** Create `formats/cheat-sheet.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1100,7 +1100,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/cheat-sheet.md && \
   git commit -m "feat: add cheat-sheet format"
 ```
@@ -1109,7 +1109,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 12: formats/step-by-step-guide.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/step-by-step-guide.md`
+**Files:** Create `formats/step-by-step-guide.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1157,7 +1157,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/step-by-step-guide.md && \
   git commit -m "feat: add step-by-step-guide format"
 ```
@@ -1207,7 +1207,7 @@ Only continue to Task 13 once A1–A5 all meet their structural expectations. Th
 - [ ] **Step 5: Commit the checkpoint results**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add docs/2026-05-17-ascii-canvas-implementation-plan.md && \
   git commit -m "docs: record Checkpoint A acceptance results"
 ```
@@ -1216,7 +1216,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 13: formats/comparison-table.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/comparison-table.md`
+**Files:** Create `formats/comparison-table.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1251,7 +1251,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/comparison-table.md && \
   git commit -m "feat: add comparison-table format"
 ```
@@ -1260,7 +1260,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 14: formats/timeline.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/timeline.md`
+**Files:** Create `formats/timeline.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1303,7 +1303,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/timeline.md && \
   git commit -m "feat: add timeline format"
 ```
@@ -1312,7 +1312,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 15: formats/decision-tree.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/decision-tree.md`
+**Files:** Create `formats/decision-tree.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1351,7 +1351,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/decision-tree.md && \
   git commit -m "feat: add decision-tree format"
 ```
@@ -1360,7 +1360,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 16: formats/architecture-diagram.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/architecture-diagram.md`
+**Files:** Create `formats/architecture-diagram.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1406,7 +1406,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/architecture-diagram.md && \
   git commit -m "feat: add architecture-diagram format"
 ```
@@ -1415,7 +1415,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 17: formats/sequence-diagram.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/sequence-diagram.md`
+**Files:** Create `formats/sequence-diagram.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1452,7 +1452,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/sequence-diagram.md && \
   git commit -m "feat: add sequence-diagram format"
 ```
@@ -1461,7 +1461,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 18: formats/mind-map.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/mind-map.md`
+**Files:** Create `formats/mind-map.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1502,7 +1502,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/mind-map.md && \
   git commit -m "feat: add mind-map format"
 ```
@@ -1511,7 +1511,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 19: formats/dashboard.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/dashboard.md`
+**Files:** Create `formats/dashboard.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1557,7 +1557,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/dashboard.md && \
   git commit -m "feat: add dashboard format"
 ```
@@ -1566,7 +1566,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 20: formats/learning-ladder.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/learning-ladder.md`
+**Files:** Create `formats/learning-ladder.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1620,7 +1620,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/learning-ladder.md && \
   git commit -m "feat: add learning-ladder format"
 ```
@@ -1629,7 +1629,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 21: formats/infographic.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/infographic.md`
+**Files:** Create `formats/infographic.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1672,7 +1672,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/infographic.md && \
   git commit -m "feat: add infographic format"
 ```
@@ -1681,7 +1681,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 22: formats/content-map.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/content-map.md`
+**Files:** Create `formats/content-map.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1722,7 +1722,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/content-map.md && \
   git commit -m "feat: add content-map format"
 ```
@@ -1731,7 +1731,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 ## Task 23: formats/concept-stack.md
 
-**Files:** Create `/Users/priyeshpatel/Skills/ascii-canvas/formats/concept-stack.md`
+**Files:** Create `formats/concept-stack.md`
 
 - [ ] **Step 1: Author per Task 7 template with these values**
 
@@ -1773,7 +1773,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/concept-stack.md && \
   git commit -m "feat: add concept-stack format"
 ```
@@ -1848,7 +1848,7 @@ For each of the 16 formats, create a richer example using the Task 24 template. 
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add examples/<format>-example.md && \
   git commit -m "feat: add <format> example artifact"
 ```
@@ -1864,7 +1864,7 @@ Replace `<format>` with the format name in the file path and commit message.
 This is the actual verification step. The skill is built; now confirm it behaves correctly end-to-end.
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/docs/acceptance-suite-results.md`
+- Create: `docs/acceptance-suite-results.md`
 
 - [ ] **Step 1: Run each of the 7 acceptance prompts against Claude with the ascii-canvas skill installed**
 
@@ -1884,7 +1884,7 @@ For each prompt below, in a fresh Claude conversation with the skill installed, 
 
 - [ ] **Step 2: Document the results**
 
-Write `/Users/priyeshpatel/Skills/ascii-canvas/docs/acceptance-suite-results.md` with one section per prompt:
+Write `docs/acceptance-suite-results.md` with one section per prompt:
 
 ````markdown
 # Acceptance suite — 2026-05-17
@@ -1919,7 +1919,7 @@ Iterate until all 7 prompts pass.
 - [ ] **Step 4: Final commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add docs/acceptance-suite-results.md && \
   git commit -m "docs: record passing acceptance suite results"
 ```
@@ -1927,26 +1927,21 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 - [ ] **Step 5: Tag v1**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git tag -a v1.0.0 -m "ascii-canvas v1 — 16 formats, 8 arcs, strict QA, auto-save"
 ```
 
 ---
 
-# Phase 6 — Optional: register skill with Claude Code
+# Phase 6 — Install location
 
-The skill files now exist at `~/Skills/ascii-canvas/`. Whether and how this is discovered by Claude Code depends on the install path your setup uses. Two options:
+The skill lives at `~/.claude/skills/ascii-canvas/` — that's the canonical location Claude Code reads from. No symlink, no separate working directory: the editable source IS the install.
 
-## Option A: Symlink into the skills cache
+To install on another machine, clone the repo into that path:
 
 ```bash
-ln -s /Users/priyeshpatel/Skills/ascii-canvas \
-      /Users/priyeshpatel/.claude/skills/ascii-canvas
+git clone <repo-url> ~/.claude/skills/ascii-canvas
 ```
-
-## Option B: Install as a plugin
-
-If you maintain skills as plugins (see existing `~/Skills/` patterns), package this as a plugin per your plugin install convention.
 
 This is a one-time setup. Once linked, the skill description (in `SKILL.md` frontmatter) will fire it per the trigger rules.
 

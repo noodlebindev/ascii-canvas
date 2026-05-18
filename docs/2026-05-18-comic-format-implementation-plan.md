@@ -8,7 +8,7 @@
 
 **Tech Stack:** Markdown only. Git for version control. No build step. No external dependencies.
 
-**Spec reference:** `/Users/priyeshpatel/Skills/ascii-canvas/docs/2026-05-18-comic-format-design.md`
+**Spec reference:** `docs/2026-05-18-comic-format-design.md`
 
 **Verification model:** 3 comic-specific acceptance prompts + spot-check 3 existing prompts (to ensure no regressions) at the end. No per-task tests — format files are content, not code.
 
@@ -16,7 +16,7 @@
 
 ## Conventions used in this plan
 
-- All paths absolute under `/Users/priyeshpatel/Skills/ascii-canvas/`.
+- All paths absolute under ``.
 - Every task ends with a `feat:`, `docs:`, or `chore:` commit.
 - For each file, the FULL CONTENT to add is shown verbatim in the task step. No "similar to task N" references.
 - "Verify" steps re-read the file or run a width-check command before committing.
@@ -32,7 +32,7 @@
 
 - [ ] **Step 1: Read the current file**
 
-Run: open `/Users/priyeshpatel/Skills/ascii-canvas/composition-rules/width-budgets.md` and locate the `## Per-format budgets` table.
+Run: open `composition-rules/width-budgets.md` and locate the `## Per-format budgets` table.
 
 - [ ] **Step 2: Insert the comic row in the table**
 
@@ -48,14 +48,14 @@ If alphabetical ordering is preferred, the row goes between `cheat-sheet` and `c
 
 Run:
 ```bash
-grep -c "^| comic" /Users/priyeshpatel/Skills/ascii-canvas/composition-rules/width-budgets.md
+grep -c "^| comic" composition-rules/width-budgets.md
 ```
 Expected: `1`
 
 - [ ] **Step 4: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add composition-rules/width-budgets.md && \
   git commit -m "feat(comic): add 100-col width budget"
 ```
@@ -125,20 +125,20 @@ In addition to universal rules U1–U6 below:
 
 Run:
 ```bash
-grep -c "^### A9\." /Users/priyeshpatel/Skills/ascii-canvas/composition-rules/narrative-arcs.md
+grep -c "^### A9\." composition-rules/narrative-arcs.md
 ```
 Expected: `4` (one for each of A9.1, A9.2, A9.3, A9.4)
 
 Also confirm:
 ```bash
-grep -c "^## Universal panel rules" /Users/priyeshpatel/Skills/ascii-canvas/composition-rules/narrative-arcs.md
+grep -c "^## Universal panel rules" composition-rules/narrative-arcs.md
 ```
 Expected: `1` (the existing universal-rules heading still present after the A9 insertion)
 
 - [ ] **Step 4: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add composition-rules/narrative-arcs.md && \
   git commit -m "feat(comic): add A9 arc family with 4 variants"
 ```
@@ -184,20 +184,20 @@ Find the `## Format fallback map (graceful degradation)` table. Add this row at 
 
 Run:
 ```bash
-grep -c "^## Comic-specific strict QA" /Users/priyeshpatel/Skills/ascii-canvas/composition-rules/qa-checklist.md
+grep -c "^## Comic-specific strict QA" composition-rules/qa-checklist.md
 ```
 Expected: `1`
 
 Run:
 ```bash
-grep -c "^| comic | slideshow |" /Users/priyeshpatel/Skills/ascii-canvas/composition-rules/qa-checklist.md
+grep -c "^| comic | slideshow |" composition-rules/qa-checklist.md
 ```
 Expected: `1`
 
 - [ ] **Step 5: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add composition-rules/qa-checklist.md && \
   git commit -m "feat(comic): add comic-specific strict QA + slideshow fallback"
 ```
@@ -209,7 +209,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 ## Task 4: Write formats/comic.md
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/formats/comic.md`
+- Create: `formats/comic.md`
 
 - [ ] **Step 1: Author the file with the full content below**
 
@@ -379,7 +379,7 @@ Run:
 ```bash
 python3 -c "
 import re
-c = open('/Users/priyeshpatel/Skills/ascii-canvas/formats/comic.md').read()
+c = open('formats/comic.md').read()
 blocks = re.findall(r'\`\`\`[a-z]*\n(.*?)\`\`\`', c, re.DOTALL)
 for i, b in enumerate(blocks, 1):
     w = max(len(l) for l in b.split('\n')) if b.strip() else 0
@@ -392,14 +392,14 @@ Expected: every block ≤ 100. If any block exceeds, shorten content and re-veri
 
 Run:
 ```bash
-grep -c "^## " /Users/priyeshpatel/Skills/ascii-canvas/formats/comic.md
+grep -c "^## " formats/comic.md
 ```
 Expected: `10` — Purpose, Use when, Do NOT use when, Width budget, Arc, Layout rules, Face library, Canonical skeleton — Unicode, Short rendered example, Failure modes.
 
 - [ ] **Step 4: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/comic.md && \
   git commit -m "feat(comic): add comic format spec file"
 ```
@@ -411,7 +411,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 ## Task 5: Write examples/comic-example.md
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/examples/comic-example.md`
+- Create: `examples/comic-example.md`
 
 - [ ] **Step 1: Author the file with the full content below**
 
@@ -497,7 +497,7 @@ Run:
 ```bash
 python3 -c "
 import re
-c = open('/Users/priyeshpatel/Skills/ascii-canvas/examples/comic-example.md').read()
+c = open('examples/comic-example.md').read()
 blocks = re.findall(r'\`\`\`[a-z]*\n(.*?)\`\`\`', c, re.DOTALL)
 for i, b in enumerate(blocks, 1):
     w = max(len(l) for l in b.split('\n')) if b.strip() else 0
@@ -509,7 +509,7 @@ Expected: every block ≤ 100. Fix and re-verify if any exceed.
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add examples/comic-example.md && \
   git commit -m "feat(comic): add comic example artifact"
 ```
@@ -525,7 +525,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 
 - [ ] **Step 1: Read current SKILL.md**
 
-Open `/Users/priyeshpatel/Skills/ascii-canvas/SKILL.md` and locate:
+Open `SKILL.md` and locate:
 1. The YAML frontmatter `description:` field
 2. The "Explicit format requests:" line in the When to fire section
 3. The routing matrix in step 2 of the Routing flow
@@ -579,20 +579,20 @@ Find the existing tie-breakers section (begins `Tie-breakers:`). Add these two l
 
 Run:
 ```bash
-grep -c "comic" /Users/priyeshpatel/Skills/ascii-canvas/SKILL.md
+grep -c "comic" SKILL.md
 ```
 Expected: at least 6 (description, explicit triggers, 2 routing matrix rows, 2 tie-breakers).
 
 Run:
 ```bash
-grep -c "characters + dialogue + lesson" /Users/priyeshpatel/Skills/ascii-canvas/SKILL.md
+grep -c "characters + dialogue + lesson" SKILL.md
 ```
 Expected: `1`
 
 - [ ] **Step 7: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add SKILL.md && \
   git commit -m "feat(comic): wire comic into SKILL.md routing + triggers"
 ```
@@ -604,7 +604,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 ## Task 7: Run 3 comic-specific prompts + spot-check 3 existing prompts
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/docs/comic-acceptance-results.md`
+- Create: `docs/comic-acceptance-results.md`
 
 This is the verification step. The format is built; now confirm end-to-end behavior.
 
@@ -670,7 +670,7 @@ Expected: routes to playbook (NOT comic, even though "useful" hints at engaging 
 
 - [ ] **Step 5: Document results**
 
-Write `/Users/priyeshpatel/Skills/ascii-canvas/docs/comic-acceptance-results.md`:
+Write `docs/comic-acceptance-results.md`:
 
 ````markdown
 # Comic format acceptance suite — 2026-05-18
@@ -723,7 +723,7 @@ Iterate until 6/6 pass.
 - [ ] **Step 7: Commit acceptance results**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add docs/comic-acceptance-results.md && \
   git commit -m "docs: record comic format acceptance suite results"
 ```
@@ -733,7 +733,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 Only after 6/6 prompts pass:
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git tag -a v1.1.0 -m "ascii-canvas v1.1.0 — add comic format (17 formats, A9 arc family, comic-specific strict QA)"
 ```
 

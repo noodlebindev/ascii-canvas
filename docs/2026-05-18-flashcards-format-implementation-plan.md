@@ -8,7 +8,7 @@
 
 **Tech Stack:** Markdown only. Git for version control. No build step. No external dependencies.
 
-**Spec reference:** `/Users/priyeshpatel/Skills/ascii-canvas/docs/2026-05-18-flashcards-format-design.md`
+**Spec reference:** `docs/2026-05-18-flashcards-format-design.md`
 
 **Verification model:** 3 flashcards-specific acceptance prompts + 2 regression prompts at the end.
 
@@ -16,7 +16,7 @@
 
 ## Conventions
 
-- All paths absolute under `/Users/priyeshpatel/Skills/ascii-canvas/`.
+- All paths absolute under ``.
 - Every task ends with a focused commit using `feat:`, `docs:`, or `chore:` prefixes.
 - Full content shown verbatim in each task — no "similar to Task N" references.
 
@@ -43,14 +43,14 @@ Recommended insertion point: right after `| playbook | 80 |`.
 
 Run:
 ```bash
-grep -c "^| flashcards" /Users/priyeshpatel/Skills/ascii-canvas/composition-rules/width-budgets.md
+grep -c "^| flashcards" composition-rules/width-budgets.md
 ```
 Expected: `1`
 
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add composition-rules/width-budgets.md && \
   git commit -m "feat(flashcards): add 80-col width budget"
 ```
@@ -89,19 +89,19 @@ Flashcards have no narrative arc — there's no hook/reveal/application sequence
 
 Run:
 ```bash
-grep -c "^### A10" /Users/priyeshpatel/Skills/ascii-canvas/composition-rules/narrative-arcs.md
+grep -c "^### A10" composition-rules/narrative-arcs.md
 ```
 Expected: `1`
 
 Also verify the Universal panel rules heading still follows after A10:
 ```bash
-grep -A1 "^### A10" /Users/priyeshpatel/Skills/ascii-canvas/composition-rules/narrative-arcs.md | head -5
+grep -A1 "^### A10" composition-rules/narrative-arcs.md | head -5
 ```
 
 - [ ] **Step 4: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add composition-rules/narrative-arcs.md && \
   git commit -m "feat(flashcards): add A10 deck arc"
 ```
@@ -147,20 +147,20 @@ Find the `## Format fallback map (graceful degradation)` table. Add this row at 
 
 Run:
 ```bash
-grep -c "^## Flashcards-specific strict QA" /Users/priyeshpatel/Skills/ascii-canvas/composition-rules/qa-checklist.md
+grep -c "^## Flashcards-specific strict QA" composition-rules/qa-checklist.md
 ```
 Expected: `1`
 
 Run:
 ```bash
-grep -c "^| flashcards | cheat-sheet |" /Users/priyeshpatel/Skills/ascii-canvas/composition-rules/qa-checklist.md
+grep -c "^| flashcards | cheat-sheet |" composition-rules/qa-checklist.md
 ```
 Expected: `1`
 
 - [ ] **Step 4: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add composition-rules/qa-checklist.md && \
   git commit -m "feat(flashcards): add flashcards-specific strict QA + cheat-sheet fallback"
 ```
@@ -172,11 +172,11 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 ## Task 4: Write formats/flashcards.md
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/formats/flashcards.md`
+- Create: `formats/flashcards.md`
 
 - [ ] **Step 1: Author the file with the full content below**
 
-Write to `/Users/priyeshpatel/Skills/ascii-canvas/formats/flashcards.md`:
+Write to `formats/flashcards.md`:
 
 ````markdown
 # flashcards
@@ -456,7 +456,7 @@ Run:
 ```bash
 python3 -c "
 import re
-c = open('/Users/priyeshpatel/Skills/ascii-canvas/formats/flashcards.md').read()
+c = open('formats/flashcards.md').read()
 blocks = re.findall(r'\`\`\`[a-z]*\n(.*?)\`\`\`', c, re.DOTALL)
 for i, b in enumerate(blocks, 1):
     w = max(len(l) for l in b.split('\n')) if b.strip() else 0
@@ -469,14 +469,14 @@ Expected: every block ≤ 80. Fix and re-verify if any exceed.
 
 Run:
 ```bash
-grep -c "^## " /Users/priyeshpatel/Skills/ascii-canvas/formats/flashcards.md
+grep -c "^## " formats/flashcards.md
 ```
 Expected: `12` — Purpose, Use when, Do NOT use when, Width budget, Arc, Layout rules, Vocab card structure, Concept card structure, Dual file output, Chat quiz mode (opt-in), Canonical skeleton — review file (...), Short rendered example — drill file (...), Failure modes. The actual count depends on how the optional subheading "Failure modes" interacts; if grep shows 13, that's also acceptable.
 
 - [ ] **Step 4: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add formats/flashcards.md && \
   git commit -m "feat(flashcards): add flashcards format spec file"
 ```
@@ -488,7 +488,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 ## Task 5: Write examples/flashcards-example.md
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/examples/flashcards-example.md`
+- Create: `examples/flashcards-example.md`
 
 - [ ] **Step 1: Author the file with the full content below**
 
@@ -666,7 +666,7 @@ Run:
 ```bash
 python3 -c "
 import re
-c = open('/Users/priyeshpatel/Skills/ascii-canvas/examples/flashcards-example.md').read()
+c = open('examples/flashcards-example.md').read()
 blocks = re.findall(r'\`\`\`[a-z]*\n(.*?)\`\`\`', c, re.DOTALL)
 for i, b in enumerate(blocks, 1):
     w = max(len(l) for l in b.split('\n')) if b.strip() else 0
@@ -678,7 +678,7 @@ Expected: every block ≤ 80.
 - [ ] **Step 3: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add examples/flashcards-example.md && \
   git commit -m "feat(flashcards): add flashcards example artifact"
 ```
@@ -733,20 +733,20 @@ Find the existing tie-breakers section. Add these two lines after the comic tie-
 
 Run:
 ```bash
-grep -c "flashcards" /Users/priyeshpatel/Skills/ascii-canvas/SKILL.md
+grep -c "flashcards" SKILL.md
 ```
 Expected: at least 5 (description + explicit triggers + 2 routing rows + 2 tie-breakers).
 
 Run:
 ```bash
-grep -c "recall / memorization drill" /Users/priyeshpatel/Skills/ascii-canvas/SKILL.md
+grep -c "recall / memorization drill" SKILL.md
 ```
 Expected: `1`
 
 - [ ] **Step 6: Commit**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add SKILL.md && \
   git commit -m "feat(flashcards): wire flashcards into SKILL.md routing + triggers"
 ```
@@ -758,7 +758,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 ## Task 7: Run 3 flashcards-specific prompts + 2 regression prompts
 
 **Files:**
-- Create: `/Users/priyeshpatel/Skills/ascii-canvas/docs/flashcards-acceptance-results.md`
+- Create: `docs/flashcards-acceptance-results.md`
 
 - [ ] **Step 1: Run prompt F1 — vocab deck**
 
@@ -817,7 +817,7 @@ Expected: routes to **comic** (NOT flashcards). 3-5 panels with characters. v1.1
 
 - [ ] **Step 5: Document results**
 
-Write to `/Users/priyeshpatel/Skills/ascii-canvas/docs/flashcards-acceptance-results.md`:
+Write to `docs/flashcards-acceptance-results.md`:
 
 ````markdown
 # Flashcards format acceptance suite — 2026-05-18
@@ -865,7 +865,7 @@ For each FAIL: identify which file caused it, fix with `fix:` commit, re-run fai
 - [ ] **Step 7: Commit results**
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git add docs/flashcards-acceptance-results.md && \
   git commit -m "docs: record v1.2.0 flashcards format acceptance suite"
 ```
@@ -875,7 +875,7 @@ cd /Users/priyeshpatel/Skills/ascii-canvas && \
 Only after 5/5 prompts pass:
 
 ```bash
-cd /Users/priyeshpatel/Skills/ascii-canvas && \
+cd ~/.claude/skills/ascii-canvas && \
   git tag -a v1.2.0 -m "ascii-canvas v1.2.0 — add flashcards format (18 formats, A10 deck arc, dual file output, opt-in chat quiz mode)"
 ```
 

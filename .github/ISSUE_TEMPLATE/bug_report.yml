@@ -1,0 +1,70 @@
+name: Bug report
+description: Something the skill did wrong, or output that surprised you
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug. Please give enough detail that someone else
+        can reproduce what you saw.
+
+  - type: input
+    id: invocation
+    attributes:
+      label: How did you invoke the skill?
+      description: The exact prompt or slash command you used.
+      placeholder: e.g. "/ascii-canvas make me a flashcard deck for X"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: format
+    attributes:
+      label: Which format was involved?
+      description: Pick the format you expected the skill to route to (or did).
+      options:
+        - flowchart
+        - step-by-step-guide
+        - timeline
+        - comparison-table
+        - architecture-diagram
+        - sequence-diagram
+        - mind-map
+        - cheat-sheet
+        - slideshow
+        - infographic
+        - dashboard
+        - decision-tree
+        - learning-ladder
+        - playbook
+        - content-map
+        - concept-stack
+        - comic
+        - flashcards
+        - skill did not activate (and should have)
+        - skill activated (and should not have)
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened?
+      description: Paste the skill's output (or describe non-activation). Include the rendered ASCII if a format fired.
+    validations:
+      required: true
+
+  - type: input
+    id: claude-version
+    attributes:
+      label: Claude Code version
+      placeholder: e.g. "Claude Code 1.x"
+    validations:
+      required: false

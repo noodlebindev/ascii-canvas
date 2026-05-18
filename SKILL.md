@@ -65,7 +65,7 @@ Compose high-quality ASCII/Unicode text-based visual artifacts. "Canva for ASCII
    - Do NOT combine formats in v1 unless explicitly requested
 
 3. LOAD FORMAT FILE (MANDATORY)
-   → Read /Users/priyeshpatel/Skills/ascii-canvas/formats/<format>.md
+   → Read formats/<format>.md
    No ad-hoc layouts. Templates only.
 
 4. DETERMINE CHARACTER SET
