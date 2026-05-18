@@ -68,8 +68,9 @@ Outputs render inline in chat. Multi-panel artifacts auto-save to
 
 ## Sample output
 
-A few inline examples of what the skill produces. See `examples/` for one richer
-artifact per format.
+A few inline examples. These aren't here to show what the skill can draw —
+they're here to show what it can help you *think*. Each artifact is a
+thinking tool first, an illustration second.
 
 ### AI agent organigram
 
@@ -110,205 +111,134 @@ artifact per format.
                                     └──────────────────────┘
 ```
 
-Double-border boxes mark the Opus-backed coordinator roles; single-border
-boxes are the Sonnet workers with their tool access listed inline.
+Multi-agent system, drawn end-to-end. Opus coordinators (double-border)
+orchestrate Sonnet workers (single-border) each carrying their own tool
+list. The shape every modern agent framework converges on.
 
-### Git internals (a complex topic, simplified)
-
-```
-            ┌───────────────────────┐
-            │     Working tree      │   files you can edit
-            │   (your filesystem)   │
-            └───────────┬───────────┘
-                        │   git add  ─────► hashes file → blob
-                        ▼
-            ┌───────────────────────┐
-            │      Staging area     │   "next snapshot"
-            │     (the index)       │
-            └───────────┬───────────┘
-                        │   git commit ───► snapshots staging → tree + commit
-                        ▼
-   ╔══════════════════════════════════════════════════════════════════╗
-   ║                          .git/objects                            ║
-   ║                                                                  ║
-   ║    ┌──────────┐ parent  ┌──────────┐ parent  ┌──────────┐        ║
-   ║    │  commit  │◄────────┤  commit  │◄────────┤  commit  │ ◄─ HEAD║
-   ║    │  6a3d…   │         │  4f2b…   │         │  9c1e…   │ ◄─ main║
-   ║    └────┬─────┘         └────┬─────┘         └────┬─────┘        ║
-   ║         │ tree               │ tree               │ tree         ║
-   ║         ▼                    ▼                    ▼              ║
-   ║    ┌──────────┐         ┌──────────┐         ┌──────────┐        ║
-   ║    │   tree   │         │   tree   │         │   tree   │        ║
-   ║    │ (dir)    │         │ (dir)    │         │ (dir)    │        ║
-   ║    └────┬─────┘         └────┬─────┘         └────┬─────┘        ║
-   ║         │                    │                    │              ║
-   ║         ▼                    ▼                    ▼              ║
-   ║    ┌──────────┐         ┌──────────┐         ┌──────────┐        ║
-   ║    │   blob   │         │   blob   │         │   blob   │        ║
-   ║    │ (bytes)  │         │ (bytes)  │         │ (bytes)  │        ║
-   ║    └──────────┘         └──────────┘         └──────────┘        ║
-   ║                                                                  ║
-   ║   commit = snapshot + author + parent(s)                         ║
-   ║   tree   = directory listing of names → blobs/trees              ║
-   ║   blob   = the actual file contents, content-addressed by SHA-1  ║
-   ╚══════════════════════════════════════════════════════════════════╝
-```
-
-What `git commit` actually does, drawn end-to-end: working tree → index →
-content-addressed object graph, with HEAD and `main` as movable refs into
-the commit chain. The same shape this skill applies to any layered system.
-
-### Architecture diagram
-
-```
-                            ╔══════════════════╗
-                            ║      Browser     ║
-                            ╚═════════╤════════╝
-                                      │  HTTPS
-                                      ▼
-              ┌─────────────────────────────────────────────┐
-              │           CDN / Edge  (Vercel)              │
-              │   ISR cache  ·  static assets  ·  middleware│
-              └─────────────────────┬───────────────────────┘
-                                    │
-                                    ▼
-              ┌─────────────────────────────────────────────┐
-              │            Next.js App Router               │
-              │  ┌───────────────────────────────────────┐  │
-              │  │  Pages  (RSC · SSR · ISR)             │  │
-              │  └───────────────────────────────────────┘  │
-              │  ┌───────────────────────────────────────┐  │
-              │  │  Route Handlers  (REST + webhooks)    │  │
-              │  └───────────────────────────────────────┘  │
-              └────────────┬──────────────────┬─────────────┘
-                           │                  │
-                           ▼                  ▼
-                  ╔════════════════╗  ╔════════════════╗
-                  ║   Postgres     ║  ║     Stripe     ║
-                  ║   (via Prisma) ║  ║   (webhooks)   ║
-                  ╚════════════════╝  ╚════════════════╝
-```
-
-Double-border boxes mark external systems; single-border for internal
-components. Inner sub-boxes group sibling responsibilities under one host.
-
-### Flowchart
-
-```
-                       ┌──────────────────────────┐
-                       │      Receive event       │
-                       └─────────────┬────────────┘
-                                     ▼
-                       ┌──────────────────────────┐
-                       │   POST to client URL     │
-                       └─────────────┬────────────┘
-                                     │
-                              ┌──────┴──────┐
-                          2xx │             │ 4xx / 5xx
-                              ▼             ▼
-                       ┌─────────┐    ┌──────────────┐
-                       │  Done   │    │  attempts++  │
-                       └─────────┘    └──────┬───────┘
-                                             ▼
-                                     ◆ attempts < 5? ◆
-                                     │               │
-                                 Yes │               │ No
-                                     ▼               ▼
-                             ┌──────────────┐  ┌──────────────────┐
-                             │   Backoff    │  │  Dead-letter +   │
-                             │  2ⁿ seconds  │  │      alert       │
-                             └──────┬───────┘  └──────────────────┘
-                                    │
-                                    └────────► retry
-```
-
-Webhook retry with exponential backoff. Diamonds mark decisions, rectangles
-mark actions, terminal states close branches.
-
-### Sequence diagram
-
-```
-   [User]                   [App]                    [AuthServer]
-     │                        │                            │
-     │     click "log in"     │                            │
-     ├───────────────────────▶│                            │
-     │                        │     redirect /authorize    │
-     │  ◄─────────────────────┼───────────────────────────▶│
-     │                                                     │
-     │           login + approve scopes                    │
-     ├────────────────────────────────────────────────────▶│
-     │                                                     │
-     │                        │     ?code=abc123           │
-     │                        │◄───────────────────────────┤
-     │                        │                            │
-     │                        │  POST /token  + secret     │
-     │                        ├───────────────────────────▶│
-     │                        │  access_token              │
-     │                        │◄───────────────────────────┤
-     │                        │                            │
-     │      "logged in"       │                            │
-     │◄───────────────────────┤                            │
-```
-
-OAuth 2.0 authorization code flow. Actor lifelines stay vertical; arrows
-carry the message labels.
-
-### Infographic (single-card explainer)
+### Mental model — perception vs reality
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
-║                                 ANATOMY OF A GREAT PULL REQUEST                                  ║
+║                                   HOW AI AGENTS ACTUALLY WORK                                    ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────┬─────────────────────────────────────────────────┐
+│              PERCEPTION                        │                  REALITY                        │
+│                                                │                                                 │
+│     Prompt                                     │     Prompt                                      │
+│       ▼                                        │       ▼                                         │
+│     ✨  Magic  ✨                                │     Parse intent + tokens                       │
+│       ▼                                        │       ▼                                         │
+│     Answer                                     │     Retrieve context  (RAG, memory)             │
+│                                                │       ▼                                         │
+│                                                │     Plan  (chain-of-thought, tasks)             │
+│                                                │       ▼                                         │
+│                                                │     Call tools  (web, code, MCP)                │
+│                                                │       ▼                                         │
+│                                                │     Verify  (self-check, retry on fail)         │
+│                                                │       ▼                                         │
+│                                                │     Format answer  +  cite sources              │
+│                                                │                                                 │
+└────────────────────────────────────────────────┴─────────────────────────────────────────────────┘
+   Every invisible step is where the model is actually earning its keep — and where it can fail.
+```
+
+The visual asymmetry *is* the insight: 3 boxes vs 7 boxes makes the gap
+between mental model and machinery legible at a glance. Same shape works
+for "how startups grow," "how compounding works," "how learning happens."
+
+### Before / after — booking sponsorships with SponsorCal
+
+```
+╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                        BOOKING SPONSORSHIPS — WITHOUT vs WITH SPONSORCAL                         ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────┬─────────────────────────────────────────────────┐
+│  ✗  WITHOUT SponsorCal                         │  ✓  WITH SponsorCal                             │
+│                                                │                                                 │
+│  ·  Email threads with 8 sponsors at once      │  ·  One public booking page per creator         │
+│  ·  Manual back-and-forth on dates             │  ·  Sponsors self-serve into open slots         │
+│  ·  Chase invoices, late payments              │  ·  Stripe checkout: pay first or no slot       │
+│  ·  "Are we still on for next week?"           │  ·  Auto reminders 7 / 3 / 1 day before         │
+│  ·  Sponsor ghosts, slot wasted                │  ·  10-min reservation lock at checkout         │
+│  ·  No data on what works                      │  ·  Per-creator sponsor performance log         │
+│                                                │                                                 │
+└────────────────────────────────────────────────┴─────────────────────────────────────────────────┘
+          From "is sponsorship even worth the chase?" → predictable, recurring revenue.
+```
+
+Product storytelling in one screen. Drop into a landing page, a pitch
+deck, a Twitter post. The before/after shape is reusable: with vs without
+your tool, old way vs new way, status quo vs ambition.
+
+### Cold outbound — bad vs good
+
+```
+╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                   COLD OUTBOUND — BAD vs GOOD                                    ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────┬─────────────────────────────────────────────────┐
+│  ✗  BAD                                        │  ✓  GOOD                                        │
+│                                                │                                                 │
+│  Subject:                                      │  Subject:                                       │
+│     "Quick question"                           │     "Your idempotency post — 1 idea"            │
+│                                                │                                                 │
+│  Opener:                                       │  Opener:                                        │
+│     "Hi {first_name}, hope you're well!"       │     "Saw your retries-vs-locks thread — the bit │
+│                                                │      about poison tokens landed."               │
+│  Body:                                         │                                                 │
+│     "We help companies like yours scale..."    │  Body:                                          │
+│                                                │     "We hit the same wall — solved it in 30     │
+│  Close:                                        │      lines. Worth showing you?"                 │
+│     "Got 15 min on Thursday?"                  │                                                 │
+│                                                │  Close:                                         │
+│  Outcome:                                      │     "If not relevant, no reply needed."         │
+│     Ignored.                                   │                                                 │
+│                                                │  Outcome:                                       │
+│                                                │     Reply in 3 hours. Call booked.              │
+│                                                │                                                 │
+└────────────────────────────────────────────────┴─────────────────────────────────────────────────┘
+              Cold outreach is not a volume game. It is the work of earning ONE reply.
+```
+
+Parallel-structure teaching. Each row anchors a concept (Subject, Opener,
+Body, Close, Outcome) so the reader's eye reads sideways for contrast. The
+template behind every "how to write a good X" post.
+
+### SQL cheat sheet
+
+```
+╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                         SQL CHEAT SHEET                                          ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+
 ┌────────────────────────────────┬────────────────────────────────┬────────────────────────────────┐
-│                                │                                │                                │
-│     ◆  ONE THING ONLY          │     ▲  UNDER 400 LINES         │     ●  TESTABLE ON ITS OWN     │
-│                                │                                │                                │
-│  A PR should do one thing.     │  Smaller PRs get reviewed.     │  Each PR should ship something │
-│  Refactor? Bug fix? Feature?   │  Bigger PRs get rubber-        │  reviewable. No half-finished  │
-│  Pick one — bundle nothing.    │  stamped or stalled in         │  changes that need the next    │
-│                                │  review.                       │  PR to make sense.             │
-│                                │                                │                                │
+│  SELECT                        │  JOIN                          │  AGGREGATE                     │
+│  ──────                        │  ────                          │  ─────────                     │
+│  SELECT * FROM users;          │  INNER  → rows in both         │  COUNT(*)                      │
+│  SELECT name FROM users;       │  LEFT   → all left + matches   │  SUM(amount)                   │
+│  SELECT DISTINCT plan FROM …;  │  RIGHT  → all right + matches  │  AVG(price)                    │
+│  SELECT name AS n FROM …;      │  FULL   → all rows, both sides │  MIN  /  MAX                   │
+│                                │  CROSS  → cartesian product    │  GROUP BY column               │
+│  WHERE                         │                                │  HAVING <agg condition>        │
+│  ─────                         │  Example:                      │                                │
+│  WHERE active = TRUE           │    SELECT u.name, o.total      │  WINDOW                        │
+│  AND  /  OR  /  NOT            │    FROM users u                │  ──────                        │
+│  IN (1, 2, 3)                  │    JOIN orders o               │  ROW_NUMBER() OVER (…)         │
+│  BETWEEN x AND y               │      ON o.user_id = u.id       │  RANK() OVER (PARTITION BY …)  │
+│  LIKE 'foo%'   /   ILIKE       │                                │  LAG()  /  LEAD()              │
+│  IS NULL  /  IS NOT NULL       │  ORDER & LIMIT                 │  SUM(x) OVER (ORDER BY …)      │
+│                                │  ─────────────                 │                                │
+│                                │  ORDER BY created DESC         │                                │
+│                                │  LIMIT 10 OFFSET 20            │                                │
 └────────────────────────────────┴────────────────────────────────┴────────────────────────────────┘
-┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│  Reviewers are people. They have ~20 minutes and questionable patience. Every constraint above   │
-│  is really one rule: respect the next person's attention. The PR you'd want to receive is the    │
-│  PR you should send.                                                                             │
-└──────────────────────────────────────────────────────────────────────────────────────────────────┘
-                                  → /ascii-canvas to make your own
+             Read top-to-bottom in each column · combine across columns for full queries
 ```
 
-Headline, three supporting blocks with icons, then a synthesis paragraph and
-CTA — the canonical infographic arc, all in monospace.
-
-### Slideshow (branded presentation, 2 panels of 4)
-
-```
-┌──────────────────────────────────────────────────────────────────────────────┐
-│ Slide 1 — The handshake                                                      │
-│                                                                              │
-│ • Your browser opens a TCP connection to the server.                         │
-│ • It says: "Hi, I want to talk securely. Here are my ciphers."               │
-│ • The server picks one and sends back its certificate.                       │
-│ • The certificate is signed by a CA your browser already trusts.             │
-│                                                                              │
-│ The handshake is over in two round-trips. No secrets exchanged yet.          │
-└──────────────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────────────┐
-│ Slide 2 — The key exchange                                                   │
-│                                                                              │
-│ • Your browser generates a random session key.                               │
-│ • It encrypts that key with the server's public key.                         │
-│ • Only the server can decrypt it — they have the matching private key.       │
-│ • Both sides now share a secret. Everything after this is symmetric.         │
-│                                                                              │
-│ HTTPS = TLS over TCP. The "S" is this handshake plus encryption.             │
-└──────────────────────────────────────────────────────────────────────────────┘
-```
-
-Each slide is a self-contained panel with title + body + closing line. Pair
-this with the slideshow narrative arcs for explainers, onboarding decks, or
-content threads.
+Dense, scannable, instantly useful — the format people bookmark. Same
+shape works for git commands, regex, vim, kubectl, anything reference-y.
 
 ### CV / résumé
 
