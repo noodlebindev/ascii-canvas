@@ -135,6 +135,18 @@ In addition to universal rules U1–U6 below:
 - **Default panel count per variant** as listed above; never exceed 8 without explicit user request
 - **Compress before expanding** (U3 applies); drop optional panels (Application, Reaction) when the topic doesn't justify them
 
+### A10 — Deck arc (flashcards format)
+
+Flashcards have no narrative arc — there's no hook/reveal/application sequence. The A10 entry is purely card-count guidance for the flashcards format.
+
+- **Default card count:** 8–15 cards (one focused study session)
+- **Never exceed 30 cards** in a single deck without explicit user request
+- **If topic needs more than 30:** split into themed sub-decks (`spanish-verbs-present`, `spanish-verbs-past`, etc.)
+- **Compress before expanding:** if you can teach the concept in fewer cards, do
+- **U1 applies:** every card must earn its existence; no filler cards
+
+**Use for:** flashcards format only. Other formats use A1–A9.
+
 ## Universal panel rules (apply to every arc)
 
 ### U1 — Every panel must earn its existence
