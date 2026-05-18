@@ -10,6 +10,7 @@ Every format has a defined max column width. Never exceed it.
 | step-by-step-guide | 80 |
 | learning-ladder | 80 |
 | playbook | 80 |
+| flashcards | 80 |
 | cheat-sheet | 90–100 |
 | comparison-table | 90–100 |
 | flowchart | 100 |
