@@ -43,36 +43,36 @@ A10 — Deck arc (card-count guidance only, no narrative). See `composition-rule
 ## Vocab card structure
 
 ```
-┌─ Card N ──────────────────────────────────────────────────────────────────────┐
-│                                                                                │
-│             <term>                                                             │
-│             [optional: pronunciation guide]                                    │
-│             [optional: part of speech — n. / v. / adj. / adv.]                 │
-│                                                                                │
-╞════════════════════════════════════════════════════════════════════════════════╡
-│                                                                                │
-│   Meaning:   <translation / one-line definition>                               │
-│   Example:   <example sentence in source language>                             │
-│               <English gloss of the example>                                   │
-│   Hook:      <mnemonic / memory hook>  [optional]                              │
-│                                                                                │
-└────────────────────────────────────────────────────────────────────────────────┘
+┌─ Card N ─────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│             <term>                                                           │
+│             [optional: pronunciation guide]                                  │
+│             [optional: part of speech — n. / v. / adj. / adv.]               │
+│                                                                              │
+╞══════════════════════════════════════════════════════════════════════════════╡
+│                                                                              │
+│   Meaning:   <translation / one-line definition>                             │
+│   Example:   <example sentence in source language>                           │
+│               <English gloss of the example>                                 │
+│   Hook:      <mnemonic / memory hook>  [optional]                            │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Concept card structure
 
 ```
-┌─ Card N ──────────────────────────────────────────────────────────────────────┐
-│                                                                                │
-│   <term or short question>                                                     │
-│                                                                                │
-╞════════════════════════════════════════════════════════════════════════════════╡
-│                                                                                │
-│   <definition — 1-3 lines>                                                     │
-│   Example: <key example or analogy>  [optional]                                │
-│   Pitfall: <common mistake>  [optional]                                        │
-│                                                                                │
-└────────────────────────────────────────────────────────────────────────────────┘
+┌─ Card N ─────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│   <term or short question>                                                   │
+│                                                                              │
+╞══════════════════════════════════════════════════════════════════════════════╡
+│                                                                              │
+│   <definition — 1-3 lines>                                                   │
+│   Example: <key example or analogy>  [optional]                              │
+│   Pitfall: <common mistake>  [optional]                                      │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Dual file output
@@ -153,46 +153,46 @@ Skill responds with just the post-save block and ends the turn.
 
 3-card mixed deck covering ser, estar, and the ser-vs-estar contrast.
 
-┌─ Card 1 ──────────────────────────────────────────────────────────────────────┐
-│                                                                                │
-│             ser                                                                │
-│             v.                                                                 │
-│                                                                                │
-╞════════════════════════════════════════════════════════════════════════════════╡
-│                                                                                │
-│   Meaning:   to be (identity, essence, permanence)                             │
-│   Example:   Soy Carlos.                                                       │
-│               I am Carlos.                                                     │
-│   Hook:      ser = WHO you are                                                 │
-│                                                                                │
-└────────────────────────────────────────────────────────────────────────────────┘
+┌─ Card 1 ─────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│             ser                                                              │
+│             v.                                                               │
+│                                                                              │
+╞══════════════════════════════════════════════════════════════════════════════╡
+│                                                                              │
+│   Meaning:   to be (identity, essence, permanence)                           │
+│   Example:   Soy Carlos.                                                     │
+│               I am Carlos.                                                   │
+│   Hook:      ser = WHO you are                                               │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
 
-┌─ Card 2 ──────────────────────────────────────────────────────────────────────┐
-│                                                                                │
-│             estar                                                              │
-│             v.                                                                 │
-│                                                                                │
-╞════════════════════════════════════════════════════════════════════════════════╡
-│                                                                                │
-│   Meaning:   to be (state, mood, location, temporary)                          │
-│   Example:   Estoy cansado.                                                    │
-│               I am tired.                                                      │
-│   Hook:      estar = HOW you are                                               │
-│                                                                                │
-└────────────────────────────────────────────────────────────────────────────────┘
+┌─ Card 2 ─────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│             estar                                                            │
+│             v.                                                               │
+│                                                                              │
+╞══════════════════════════════════════════════════════════════════════════════╡
+│                                                                              │
+│   Meaning:   to be (state, mood, location, temporary)                        │
+│   Example:   Estoy cansado.                                                  │
+│               I am tired.                                                    │
+│   Hook:      estar = HOW you are                                             │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
 
-┌─ Card 3 ──────────────────────────────────────────────────────────────────────┐
-│                                                                                │
-│   When to use ser vs estar?                                                    │
-│                                                                                │
-╞════════════════════════════════════════════════════════════════════════════════╡
-│                                                                                │
-│   ser = identity / origin / permanent traits / time                            │
-│   estar = location / mood / temporary state / ongoing action                   │
-│   Example:  Es aburrido (boring person) vs Está aburrido (bored now)           │
-│   Pitfall:  Don't use ser for "how I feel today" — that's estar                │
-│                                                                                │
-└────────────────────────────────────────────────────────────────────────────────┘
+┌─ Card 3 ─────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│   When to use ser vs estar?                                                  │
+│                                                                              │
+╞══════════════════════════════════════════════════════════════════════════════╡
+│                                                                              │
+│   ser = identity / origin / permanent traits / time                          │
+│   estar = location / mood / temporary state / ongoing action                 │
+│   Example:  Es aburrido (boring person) vs Está aburrido (bored now)         │
+│   Pitfall:  Don't use ser for "how I feel today" — that's estar              │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Short rendered example — drill file (matching 3 cards, fronts only)
@@ -202,25 +202,25 @@ Skill responds with just the post-save block and ends the turn.
 
 3 cards. Try to recall each card's answer. Then open the review file to check.
 
-┌─ Card 1 ──────────────────────────────────────────────────────────────────────┐
-│                                                                                │
-│             ser                                                                │
-│             v.                                                                 │
-│                                                                                │
-└────────────────────────────────────────────────────────────────────────────────┘
+┌─ Card 1 ─────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│             ser                                                              │
+│             v.                                                               │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
 
-┌─ Card 2 ──────────────────────────────────────────────────────────────────────┐
-│                                                                                │
-│             estar                                                              │
-│             v.                                                                 │
-│                                                                                │
-└────────────────────────────────────────────────────────────────────────────────┘
+┌─ Card 2 ─────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│             estar                                                            │
+│             v.                                                               │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
 
-┌─ Card 3 ──────────────────────────────────────────────────────────────────────┐
-│                                                                                │
-│   When to use ser vs estar?                                                    │
-│                                                                                │
-└────────────────────────────────────────────────────────────────────────────────┘
+┌─ Card 3 ─────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│   When to use ser vs estar?                                                  │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Failure modes
