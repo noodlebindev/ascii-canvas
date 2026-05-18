@@ -66,6 +66,93 @@ explicitly with `/ascii-canvas`. Some examples of what it's useful for:
 Outputs render inline in chat. Multi-panel artifacts auto-save to
 `~/Ascii-diagrams/YYYY-MM/YYYY-MM-DD-<slug>.md` for reuse.
 
+## Sample output
+
+A few inline examples of what the skill produces. See `examples/` for one richer
+artifact per format.
+
+### Comparison table
+
+```
+REST vs GraphQL vs gRPC
+
+┌──────────────┬──────────────────────┬──────────────────────┬──────────────────────┐
+│ Dimension    │ REST                 │ GraphQL              │ gRPC                 │
+├──────────────┼──────────────────────┼──────────────────────┼──────────────────────┤
+│ Transport    │ HTTP/1.1             │ HTTP/1.1             │ HTTP/2               │
+│ Payload      │ JSON                 │ JSON                 │ Protobuf (binary)    │
+│ Schema       │ Optional (OpenAPI)   │ Required             │ Required (.proto)    │
+│ Caching      │ Easy (HTTP)          │ Harder               │ Custom               │
+│ Best for     │ Public APIs          │ Mobile + over-fetch  │ Internal RPC, perf   │
+└──────────────┴──────────────────────┴──────────────────────┴──────────────────────┘
+```
+
+### Flashcards (single card, front + back)
+
+```
+┌─ Card 1 ─────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│             ser                                                              │
+│             v.                                                               │
+│                                                                              │
+╞══════════════════════════════════════════════════════════════════════════════╡
+│                                                                              │
+│   Meaning:   to be (identity, essence, permanence)                           │
+│   Example:   Soy Carlos.  →  I am Carlos.                                    │
+│   Hook:      ser = WHO you are                                               │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+A drill file (fronts only, for self-testing) auto-generates alongside the
+review file.
+
+### Comic (2 panels of 4)
+
+```
+┌── Panel 1: At the language exchange ────────────────────────────────────────────────────────────┐
+│                                                                                                 │
+│   Sofía                                            Carlos                                       │
+│   (•‿•) ── "¡Hola! ¿Cuántos años tienes?"                                "¡Hola!" ── [•‿•]      │
+│     │                                                                       │                   │
+│    ╱│╲                                                                     ╱│╲                  │
+│    ╱ ╲                                                                     ╱ ╲                  │
+│                                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+┌── Panel 2: The mistake ─────────────────────────────────────────────────────────────────────────┐
+│                                                                                                 │
+│   Sofía                                            Carlos                                       │
+│   (¬_¬)                                                       "Yo soy 30 años." ── [•_•]        │
+│     │                                                                       │                   │
+│    ╱│╲                                                                     ╱│╲                  │
+│    ╱ ╲                                                                     ╱ ╲                  │
+│                                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+Character grammar uses brackets for identity: `(face)` round = female, `[face]`
+square = male. The full 4-panel arc (setup → mistake → correction → application)
+is in `examples/comic-example.md`.
+
+### Dashboard
+
+```
+╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║  WEEKLY METRICS                                                              as of 2026-05-18    ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+┌────────────────────────────────┬────────────────────────────────┬────────────────────────────────┐
+│ Signups (week)                 │ MRR                            │ Churn                          │
+│                  312  ▲        │              $18,420  ▲        │                  1.8%  ▼       │
+│  +12% vs last week             │  +6% MoM ($1,040 added)        │  down from 2.4% last month     │
+├────────────────────────────────┼────────────────────────────────┼────────────────────────────────┤
+│ Active users                   │ Top feature                    │ Top referrer                   │
+│               2,847  ▲         │             Quick-add  ▬       │       hackernews.com  ▬        │
+│  +89 new this week             │  used by 64% of active users   │  142 visits this week          │
+└────────────────────────────────┴────────────────────────────────┴────────────────────────────────┘
+  Summary: Growth and retention both up; churn at a 6-month low.
+```
+
 ## The 18 formats
 
 | Format | Use case |
