@@ -22,16 +22,45 @@ That's it. Claude Code auto-discovers the skill at session start.
 ## Usage
 
 The skill auto-fires when your prompt matches its triggers, or you can invoke
-explicitly with `/ascii-canvas`:
+explicitly with `/ascii-canvas`. Some examples of what it's useful for:
+
+**Software & systems**
 
 ```
-"Make me a flowchart of how Stripe webhooks handle idempotency."
-"Break down Spanish verb conjugation visually."
-"Comic teaching the ser vs estar mistake."
-"Flashcards for the 12 most common Spanish verbs."
-"Drill me on Next.js hooks."
-"Dashboard of weekly metrics."
-"Architecture diagram of a Vercel + Neon Postgres app, in plain ASCII for email."
+"Architecture diagram of a typical web app with a cache, queue, and workers."
+"Sequence diagram of the OAuth 2.0 authorization code flow."
+"Flowchart for retrying a failed webhook with exponential backoff."
+"Decision tree for choosing between SQL, NoSQL, and a vector database."
+"Cheat sheet for git rebase, including interactive mode."
+```
+
+**Learning & teaching**
+
+```
+"Flashcards for the 50 most common French verbs."
+"Drill me on JavaScript array methods."
+"Learning ladder from beginner to advanced in statistics."
+"Comic explaining why TCP needs a three-way handshake."
+"Mind map of the causes of World War I."
+```
+
+**Work & operations**
+
+```
+"Playbook for onboarding a new engineer in their first week."
+"Dashboard of weekly product metrics."
+"Timeline of a 12-week product launch."
+"Comparison table: Notion vs Linear vs Jira for a 10-person team."
+"Step-by-step guide to running a customer discovery interview."
+```
+
+**Thinking & writing**
+
+```
+"Infographic summarizing the key findings of a research paper."
+"Content map: turn one essay on deep work into a thread, video outline, and email."
+"Concept stack of the modern web — DNS, TLS, HTTP, HTML."
+"Mind map of arguments for and against the four-day workweek."
 ```
 
 Outputs render inline in chat. Multi-panel artifacts auto-save to
