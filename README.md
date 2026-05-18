@@ -14,7 +14,7 @@ to a date-organized library.
 Clone into Claude Code's skills directory:
 
 ```bash
-git clone <repo-url> ~/.claude/skills/ascii-canvas
+git clone https://github.com/noodlebindev/ascii-canvas ~/.claude/skills/ascii-canvas
 ```
 
 That's it. Claude Code auto-discovers the skill at session start.
