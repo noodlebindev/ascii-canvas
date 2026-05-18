@@ -71,87 +71,181 @@ Outputs render inline in chat. Multi-panel artifacts auto-save to
 A few inline examples of what the skill produces. See `examples/` for one richer
 artifact per format.
 
-### Comparison table
+### Architecture diagram
 
 ```
-REST vs GraphQL vs gRPC
-
-┌──────────────┬──────────────────────┬──────────────────────┬──────────────────────┐
-│ Dimension    │ REST                 │ GraphQL              │ gRPC                 │
-├──────────────┼──────────────────────┼──────────────────────┼──────────────────────┤
-│ Transport    │ HTTP/1.1             │ HTTP/1.1             │ HTTP/2               │
-│ Payload      │ JSON                 │ JSON                 │ Protobuf (binary)    │
-│ Schema       │ Optional (OpenAPI)   │ Required             │ Required (.proto)    │
-│ Caching      │ Easy (HTTP)          │ Harder               │ Custom               │
-│ Best for     │ Public APIs          │ Mobile + over-fetch  │ Internal RPC, perf   │
-└──────────────┴──────────────────────┴──────────────────────┴──────────────────────┘
+                            ╔══════════════════╗
+                            ║      Browser     ║
+                            ╚═════════╤════════╝
+                                      │  HTTPS
+                                      ▼
+              ┌─────────────────────────────────────────────┐
+              │           CDN / Edge  (Vercel)              │
+              │   ISR cache  ·  static assets  ·  middleware│
+              └─────────────────────┬───────────────────────┘
+                                    │
+                                    ▼
+              ┌─────────────────────────────────────────────┐
+              │            Next.js App Router               │
+              │  ┌───────────────────────────────────────┐  │
+              │  │  Pages  (RSC · SSR · ISR)             │  │
+              │  └───────────────────────────────────────┘  │
+              │  ┌───────────────────────────────────────┐  │
+              │  │  Route Handlers  (REST + webhooks)    │  │
+              │  └───────────────────────────────────────┘  │
+              └────────────┬──────────────────┬─────────────┘
+                           │                  │
+                           ▼                  ▼
+                  ╔════════════════╗  ╔════════════════╗
+                  ║   Postgres     ║  ║     Stripe     ║
+                  ║   (via Prisma) ║  ║   (webhooks)   ║
+                  ╚════════════════╝  ╚════════════════╝
 ```
 
-### Flashcards (single card, front + back)
+Double-border boxes mark external systems; single-border for internal
+components. Inner sub-boxes group sibling responsibilities under one host.
+
+### Flowchart
 
 ```
-┌─ Card 1 ─────────────────────────────────────────────────────────────────────┐
+                       ┌──────────────────────────┐
+                       │      Receive event       │
+                       └─────────────┬────────────┘
+                                     ▼
+                       ┌──────────────────────────┐
+                       │   POST to client URL     │
+                       └─────────────┬────────────┘
+                                     │
+                              ┌──────┴──────┐
+                          2xx │             │ 4xx / 5xx
+                              ▼             ▼
+                       ┌─────────┐    ┌──────────────┐
+                       │  Done   │    │  attempts++  │
+                       └─────────┘    └──────┬───────┘
+                                             ▼
+                                     ◆ attempts < 5? ◆
+                                     │               │
+                                 Yes │               │ No
+                                     ▼               ▼
+                             ┌──────────────┐  ┌──────────────────┐
+                             │   Backoff    │  │  Dead-letter +   │
+                             │  2ⁿ seconds  │  │      alert       │
+                             └──────┬───────┘  └──────────────────┘
+                                    │
+                                    └────────► retry
+```
+
+Webhook retry with exponential backoff. Diamonds mark decisions, rectangles
+mark actions, terminal states close branches.
+
+### Sequence diagram
+
+```
+   [User]                   [App]                    [AuthServer]
+     │                        │                            │
+     │     click "log in"     │                            │
+     ├───────────────────────▶│                            │
+     │                        │     redirect /authorize    │
+     │  ◄─────────────────────┼───────────────────────────▶│
+     │                                                     │
+     │           login + approve scopes                    │
+     ├────────────────────────────────────────────────────▶│
+     │                                                     │
+     │                        │     ?code=abc123           │
+     │                        │◄───────────────────────────┤
+     │                        │                            │
+     │                        │  POST /token  + secret     │
+     │                        ├───────────────────────────▶│
+     │                        │  access_token              │
+     │                        │◄───────────────────────────┤
+     │                        │                            │
+     │      "logged in"       │                            │
+     │◄───────────────────────┤                            │
+```
+
+OAuth 2.0 authorization code flow. Actor lifelines stay vertical; arrows
+carry the message labels.
+
+### Infographic (single-card explainer)
+
+```
+╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                 ANATOMY OF A GREAT PULL REQUEST                                  ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+┌────────────────────────────────┬────────────────────────────────┬────────────────────────────────┐
+│                                │                                │                                │
+│     ◆  ONE THING ONLY          │     ▲  UNDER 400 LINES         │     ●  TESTABLE ON ITS OWN     │
+│                                │                                │                                │
+│  A PR should do one thing.     │  Smaller PRs get reviewed.     │  Each PR should ship something │
+│  Refactor? Bug fix? Feature?   │  Bigger PRs get rubber-        │  reviewable. No half-finished  │
+│  Pick one — bundle nothing.    │  stamped or stalled in         │  changes that need the next    │
+│                                │  review.                       │  PR to make sense.             │
+│                                │                                │                                │
+└────────────────────────────────┴────────────────────────────────┴────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Reviewers are people. They have ~20 minutes and questionable patience. Every constraint above   │
+│  is really one rule: respect the next person's attention. The PR you'd want to receive is the    │
+│  PR you should send.                                                                             │
+└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+                                  → /ascii-canvas to make your own
+```
+
+Headline, three supporting blocks with icons, then a synthesis paragraph and
+CTA — the canonical infographic arc, all in monospace.
+
+### Slideshow (branded presentation, 2 panels of 4)
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ Slide 1 — The handshake                                                      │
 │                                                                              │
-│             ser                                                              │
-│             v.                                                               │
+│ • Your browser opens a TCP connection to the server.                         │
+│ • It says: "Hi, I want to talk securely. Here are my ciphers."               │
+│ • The server picks one and sends back its certificate.                       │
+│ • The certificate is signed by a CA your browser already trusts.             │
 │                                                                              │
-╞══════════════════════════════════════════════════════════════════════════════╡
+│ The handshake is over in two round-trips. No secrets exchanged yet.          │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ Slide 2 — The key exchange                                                   │
 │                                                                              │
-│   Meaning:   to be (identity, essence, permanence)                           │
-│   Example:   Soy Carlos.  →  I am Carlos.                                    │
-│   Hook:      ser = WHO you are                                               │
+│ • Your browser generates a random session key.                               │
+│ • It encrypts that key with the server's public key.                         │
+│ • Only the server can decrypt it — they have the matching private key.       │
+│ • Both sides now share a secret. Everything after this is symmetric.         │
 │                                                                              │
+│ HTTPS = TLS over TCP. The "S" is this handshake plus encryption.             │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
-A drill file (fronts only, for self-testing) auto-generates alongside the
-review file.
+Each slide is a self-contained panel with title + body + closing line. Pair
+this with the slideshow narrative arcs for explainers, onboarding decks, or
+content threads.
 
 ### Comic (2 panels of 4)
 
 ```
 ┌── Panel 1: At the language exchange ────────────────────────────────────────────────────────────┐
 │                                                                                                 │
-│   Sofía                                            Carlos                                       │
-│   (•‿•) ── "¡Hola! ¿Cuántos años tienes?"                                "¡Hola!" ── [•‿•]      │
-│     │                                                                       │                   │
-│    ╱│╲                                                                     ╱│╲                  │
-│    ╱ ╲                                                                     ╱ ╲                  │
+│   Sofía                                                                Carlos                   │
+│   (•‿•)                                                                [•‿•]                    │
+│   "¡Hola! ¿Cuántos años tienes?"                                       "¡Hola!"                 │
 │                                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌── Panel 2: The mistake ─────────────────────────────────────────────────────────────────────────┐
 │                                                                                                 │
-│   Sofía                                            Carlos                                       │
-│   (¬_¬)                                                       "Yo soy 30 años." ── [•_•]        │
-│     │                                                                       │                   │
-│    ╱│╲                                                                     ╱│╲                  │
-│    ╱ ╲                                                                     ╱ ╲                  │
+│   Sofía                                                                Carlos                   │
+│   (¬_¬)                                                                [•_•]                    │
+│                                                                       "Yo soy 30 años."         │
 │                                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 Character grammar uses brackets for identity: `(face)` round = female, `[face]`
-square = male. The full 4-panel arc (setup → mistake → correction → application)
-is in `examples/comic-example.md`.
-
-### Dashboard
-
-```
-╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
-║  WEEKLY METRICS                                                              as of 2026-05-18    ║
-╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
-┌────────────────────────────────┬────────────────────────────────┬────────────────────────────────┐
-│ Signups (week)                 │ MRR                            │ Churn                          │
-│                  312  ▲        │              $18,420  ▲        │                  1.8%  ▼       │
-│  +12% vs last week             │  +6% MoM ($1,040 added)        │  down from 2.4% last month     │
-├────────────────────────────────┼────────────────────────────────┼────────────────────────────────┤
-│ Active users                   │ Top feature                    │ Top referrer                   │
-│               2,847  ▲         │             Quick-add  ▬       │       hackernews.com  ▬        │
-│  +89 new this week             │  used by 64% of active users   │  142 visits this week          │
-└────────────────────────────────┴────────────────────────────────┴────────────────────────────────┘
-  Summary: Growth and retention both up; churn at a 6-month low.
-```
+square = male. The full 4-panel arc with stick figures, speech bubbles, and a
+narrated takeaway is in `examples/comic-example.md`.
 
 ## The 18 formats
 
