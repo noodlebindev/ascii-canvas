@@ -1,6 +1,6 @@
 ---
 name: ascii-canvas
-description: Compose ASCII/Unicode diagrams, slideshows, infographics, playbooks, comic strips, and other text-based visual artifacts from a topic, idea, or set of facts. Use when the user explicitly requests a diagram/visual/format (flowchart, slideshow, cheat sheet, infographic, timeline, comic strip, etc.) OR asks for a structured breakdown / step-by-step explanation of a non-trivial topic. Do NOT trigger for simple factual questions, short answers (less than ~3 steps or one paragraph), or conversational/opinion queries.
+description: Compose ASCII/Unicode diagrams, slideshows, infographics, playbooks, comic strips, flashcards, and other text-based visual artifacts from a topic, idea, or set of facts. Use when the user explicitly requests a diagram/visual/format (flowchart, slideshow, cheat sheet, infographic, timeline, comic strip, flashcards, etc.) OR asks for a structured breakdown / step-by-step explanation of a non-trivial topic. Do NOT trigger for simple factual questions, short answers (less than ~3 steps or one paragraph), or conversational/opinion queries.
 ---
 
 # ascii-canvas
@@ -10,7 +10,7 @@ Compose high-quality ASCII/Unicode text-based visual artifacts. "Canva for ASCII
 ## When to fire
 
 **Fire on:**
-- Explicit format requests: "make a flowchart", "draw the architecture", "ASCII slideshow", "infographic on X", "comparison table", "timeline of", "cheat sheet for", "make a comic", "comic strip", "comic-style", "as a skit", "as a scenario", "with characters", "dialogue between X and Y", "anthropomorphize X"
+- Explicit format requests: "make a flowchart", "draw the architecture", "ASCII slideshow", "infographic on X", "comparison table", "timeline of", "cheat sheet for", "make a comic", "comic strip", "comic-style", "as a skit", "as a scenario", "with characters", "dialogue between X and Y", "anthropomorphize X", "make flashcards", "flashcard deck", "vocab cards", "study cards", "Anki-style cards", "drill me on X", "quiz me on X", "test me on X", "help me memorize X"
 - Visual framing: "visualize X", "show me how X works", "diagram this", "illustrate"
 - Structured breakdown of non-trivial topics: "break down X", "walk me through X step by step", "explain X as a playbook", "learning ladder for X", "content map for X"
 
@@ -52,12 +52,16 @@ Compose high-quality ASCII/Unicode text-based visual artifacts. "Canva for ASCII
    high-signal summary           → infographic
    characters + dialogue + lesson → comic
    anthropomorphized concept     → comic
+   recall / memorization drill   → flashcards
+   quiz / test self              → flashcards
 
    Tie-breakers:
    - Multiple formats apply       → choose simplest that preserves clarity
    - Two formats equally fit      → choose the simpler one
    - Comic vs slideshow ambiguous → slideshow (simpler)
    - Comic vs sequence-diagram    → comic for educational, sequence-diagram for technical
+   - Flashcards vs cheat-sheet    → flashcards for active recall, cheat-sheet for passive reference
+   - Flashcards vs comparison-table → comparison-table for side-by-side, flashcards for sequential Q/A
    - Do NOT combine formats in v1 unless explicitly requested
 
 3. LOAD FORMAT FILE (MANDATORY)
