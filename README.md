@@ -71,6 +71,93 @@ Outputs render inline in chat. Multi-panel artifacts auto-save to
 A few inline examples of what the skill produces. See `examples/` for one richer
 artifact per format.
 
+### AI agent organigram
+
+```
+                                    ┌──────────────────────┐
+                                    │     User request     │
+                                    └───────────┬──────────┘
+                                                ▼
+                                    ╔══════════════════════╗
+                                    ║   Orchestrator       ║
+                                    ║   Claude Opus 4.7    ║
+                                    ╚═══════════╤══════════╝
+                                                │  decompose & route
+                          ┌─────────────────────┼─────────────────────┐
+                          │                     │                     │
+                          ▼                     ▼                     ▼
+                ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐
+                │     Planner      │  │   Researcher     │  │     Writer       │
+                │  Sonnet 4.6      │  │  Sonnet 4.6      │  │   Sonnet 4.6     │
+                ├──────────────────┤  ├──────────────────┤  ├──────────────────┤
+                │ Tools:           │  │ Tools:           │  │ Tools:           │
+                │  • TodoWrite     │  │  • WebSearch     │  │  • Write         │
+                │  • Read          │  │  • WebFetch      │  │  • Edit          │
+                │                  │  │  • Read          │  │                  │
+                └────────┬─────────┘  └────────┬─────────┘  └────────┬─────────┘
+                         │                     │                     │
+                         └─────────────────────┼─────────────────────┘
+                                               │  return drafts
+                                               ▼
+                                    ╔══════════════════════╗
+                                    ║      Reviewer        ║
+                                    ║   Claude Opus 4.7    ║
+                                    ╚═══════════╤══════════╝
+                                                │  approved
+                                                ▼
+                                    ┌──────────────────────┐
+                                    │   Final response     │
+                                    └──────────────────────┘
+```
+
+Double-border boxes mark the Opus-backed coordinator roles; single-border
+boxes are the Sonnet workers with their tool access listed inline.
+
+### Git internals (a complex topic, simplified)
+
+```
+            ┌───────────────────────┐
+            │     Working tree      │   files you can edit
+            │   (your filesystem)   │
+            └───────────┬───────────┘
+                        │   git add  ─────► hashes file → blob
+                        ▼
+            ┌───────────────────────┐
+            │      Staging area     │   "next snapshot"
+            │     (the index)       │
+            └───────────┬───────────┘
+                        │   git commit ───► snapshots staging → tree + commit
+                        ▼
+   ╔══════════════════════════════════════════════════════════════════╗
+   ║                          .git/objects                            ║
+   ║                                                                  ║
+   ║    ┌──────────┐ parent  ┌──────────┐ parent  ┌──────────┐        ║
+   ║    │  commit  │◄────────┤  commit  │◄────────┤  commit  │ ◄─ HEAD║
+   ║    │  6a3d…   │         │  4f2b…   │         │  9c1e…   │ ◄─ main║
+   ║    └────┬─────┘         └────┬─────┘         └────┬─────┘        ║
+   ║         │ tree               │ tree               │ tree         ║
+   ║         ▼                    ▼                    ▼              ║
+   ║    ┌──────────┐         ┌──────────┐         ┌──────────┐        ║
+   ║    │   tree   │         │   tree   │         │   tree   │        ║
+   ║    │ (dir)    │         │ (dir)    │         │ (dir)    │        ║
+   ║    └────┬─────┘         └────┬─────┘         └────┬─────┘        ║
+   ║         │                    │                    │              ║
+   ║         ▼                    ▼                    ▼              ║
+   ║    ┌──────────┐         ┌──────────┐         ┌──────────┐        ║
+   ║    │   blob   │         │   blob   │         │   blob   │        ║
+   ║    │ (bytes)  │         │ (bytes)  │         │ (bytes)  │        ║
+   ║    └──────────┘         └──────────┘         └──────────┘        ║
+   ║                                                                  ║
+   ║   commit = snapshot + author + parent(s)                         ║
+   ║   tree   = directory listing of names → blobs/trees              ║
+   ║   blob   = the actual file contents, content-addressed by SHA-1  ║
+   ╚══════════════════════════════════════════════════════════════════╝
+```
+
+What `git commit` actually does, drawn end-to-end: working tree → index →
+content-addressed object graph, with HEAD and `main` as movable refs into
+the commit chain. The same shape this skill applies to any layered system.
+
 ### Architecture diagram
 
 ```
