@@ -46,6 +46,19 @@ When the artifact is a comic, strict QA additionally verifies:
 5. **Face mood varies across panels** — when the same character appears in multiple panels, their face must change at least once (static-face comic = fail-twice triggers reroute to slideshow)
 6. **Panel frame widths identical** — every panel's outer frame is the same width (100 cols by default)
 
+## Flashcards-specific strict QA (in addition to the 8 points + cross-artifact check)
+
+When the artifact is a flashcards deck, strict QA additionally verifies:
+
+1. **Every card has a card number** (`┌─ Card N ─`) and numbers are sequential 1..N
+2. **Drill divider present** on every card in the review file (`╞════╡`)
+3. **Drill file has NO drill divider** and NO back content — fronts only
+4. **Card subtype consistency** — each card is either vocab structure (term + meaning + example) or concept structure (term/question + definition); no half-mixed cards
+5. **Back side ≤ 5 lines of content** (excluding padding and borders)
+6. **Card frame widths identical** — every card in a deck is exactly 80 cols outer width
+7. **Drill file card count = review file card count** — same N cards, same numbering, just no backs
+8. **Front content fits without wrapping** — terms/questions short enough to render on one line; multi-line fronts allowed only for concept cards with explicit multi-line questions
+
 ## When QA runs
 
 - **Light QA:** every single in-chat artifact.
@@ -88,6 +101,7 @@ When the simplify rule cannot save the layout, fall back to a simpler adjacent f
 | flowchart | step-by-step-guide |
 | decision-tree | comparison-table |
 | comic | slideshow |
+| flashcards | cheat-sheet |
 
 When fallback fires, emit a one-line note:
 ```
